@@ -35,36 +35,36 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn2.setOnClickListener { view ->
-            var builder = getNotificationBuilder("pending2", "pending intent2")
+            val builder = getNotificationBuilder("pending2", "pending intent2")
             builder.setContentTitle("notification title 2")
             builder.setContentText("노티 메시지 2")
             builder.setSmallIcon(android.R.drawable.ic_dialog_info)
             builder.setAutoCancel(true)
 
-            var intent2 = Intent(this, Test2Activity::class.java)
+            val intent2 = Intent(this, Test2Activity::class.java)
             intent2.putExtra("stringSend", "data sending!!")
             intent2.putExtra("intSend", 11)
-            var pending = PendingIntent.getActivity(this, 20, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pending = PendingIntent.getActivity(this, 20, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
             // getActivity의 파라미터들 중에 flags 를 PendingIntent.FLAG_UPDATE_CURRENT 를 넣어줘야만 intent가 제대로 전달된다.
 
             builder.setContentIntent(pending)
 
-            var notification = builder.build()
-            var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notification = builder.build()
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.notify(20, notification)
         }
 
         btn3.setOnClickListener { view ->
-            var builder = getNotificationBuilder("pending3", "pending intent3")
+            val builder = getNotificationBuilder("pending3", "pending intent3")
             builder.setContentTitle("notification title 3")
             builder.setContentText("노티 메시지 3")
             builder.setSmallIcon(android.R.drawable.ic_dialog_info)
             builder.setAutoCancel(true)
 
-            var intent2 = Intent(this, Test2Activity::class.java)
+            val intent2 = Intent(this, Test2Activity::class.java)
             intent2.putExtra("stringSend", "data sending3")
             intent2.putExtra("intSend", 333)
-            var pending = PendingIntent.getActivity(this, 30, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pending = PendingIntent.getActivity(this, 30, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
             // getActivity의 파라미터들 중에 requestCode 를 다르게 주면 같은 엑티비티가 실행되지만 마지막 내용으로 덮어지게 되는것이 아니라
             // 각각의 noti에 해당 데이터를 전달해줄 수 있다.
 
@@ -73,12 +73,13 @@ class MainActivity : AppCompatActivity() {
             val intent3 = Intent(this, Test2Activity::class.java)
             intent3.putExtra("stringData3", "Test3Activity 실행")
             val pending3 = PendingIntent.getActivity(this, 40, intent3, PendingIntent.FLAG_UPDATE_CURRENT)
-            val builder2 = NotificationCompat.Action.Builder(android.R.drawable.ic_dialog_alert, "Action 1", pending3)
+            // notification과 함께 action 을 추가해줄 수 있다.
+            val builder2 = NotificationCompat.Action.Builder(android.R.drawable.ic_dialog_alert, "Action!!!", pending3)
             val action1 = builder2.build()
             builder.addAction(action1)
 
-            var notification = builder.build()
-            var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notification = builder.build()
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.notify(30, notification)
         }
     }
@@ -87,8 +88,8 @@ class MainActivity : AppCompatActivity() {
         var builder : NotificationCompat.Builder? = null
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            var channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH)
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH)
             channel.enableLights(true)
             channel.lightColor = Color.RED
             channel.enableVibration(true)
